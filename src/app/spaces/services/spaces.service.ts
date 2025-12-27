@@ -44,7 +44,6 @@ export class SpacesService {
     return this.http.delete<void>(`${this.apiUrl}/${spaceId}`);
   }
 
-  // Image management methods
   uploadImage(spaceId: number, file: File): Observable<ImageUploadResponse> {
     const formData = new FormData();
     formData.append('file', file);

@@ -142,7 +142,6 @@ export class SpaceDetailPage implements OnInit {
     }
   }
 
-  // Image management methods
   triggerImageUpload(): void {
     this.imageInput.nativeElement.click();
   }
@@ -174,7 +173,6 @@ export class SpaceDetailPage implements OnInit {
       }
     });
 
-    // Reset input
     input.value = '';
   }
 

@@ -4,7 +4,6 @@
   } @else if (errorMessage) {
     <div class="error-message">{{ errorMessage }}</div>
   } @else if (space) {
-    <!-- Hidden file input -->
     <input 
       type="file" 
       #imageInput 
@@ -24,7 +23,6 @@
         }
       </div>
       
-      <!-- Space Image -->
       <div class="space-image-container">
         @if (space.imageUrl) {
           <img [src]="space.imageUrl" [alt]="space.name" class="space-image" />

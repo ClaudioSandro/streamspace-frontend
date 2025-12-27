@@ -35,7 +35,6 @@ export class AuthService {
       tap((response: any) => {
         console.log('[AuthService] Sign-in response (raw):', JSON.stringify(response, null, 2));
         
-        // Intenta obtener el token con diferentes nombres posibles
         const token = response.token || response.accessToken || response.access_token;
         const id = response.id || response.userId || response.user_id;
         const role = response.role || (response.roles && response.roles[0]) || 'ROLE_USER';
