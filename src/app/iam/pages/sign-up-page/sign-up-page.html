@@ -1,0 +1,21 @@
+<div class="sign-up-page">
+  <div class="page-container">
+    <app-sign-up-form (submitForm)="onSignUp($event)"></app-sign-up-form>
+    
+    @if (errorMessage) {
+      <div class="error-alert">{{ errorMessage }}</div>
+    }
+    
+    @if (successMessage) {
+      <div class="success-alert">{{ successMessage }}</div>
+    }
+    
+    @if (isLoading) {
+      <div class="loading">Cargando...</div>
+    }
+    
+    <div class="redirect-link">
+      <p>¿Ya tienes una cuenta? <a routerLink="/sign-in">Inicia sesión aquí</a></p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,26 @@
+<div class="space-edit-page">
+  <div class="page-container">
+    @if (isLoading) {
+      <div class="loading">Cargando espacio...</div>
+    } @else if (errorMessage && !space) {
+      <div class="error-message">{{ errorMessage }}</div>
+    } @else if (space) {
+      @if (errorMessage) {
+        <div class="error-alert">{{ errorMessage }}</div>
+      }
+      
+      @if (isSaving) {
+        <div class="loading-overlay">
+          <div class="loading">Guardando cambios...</div>
+        </div>
+      }
+      
+      <app-space-form 
+        [space]="space"
+        [isEditMode]="true"
+        (submitForm)="onSubmit($event)"
+        (cancelForm)="onCancel()"
+      ></app-space-form>
+    }
+  </div>
+</div>

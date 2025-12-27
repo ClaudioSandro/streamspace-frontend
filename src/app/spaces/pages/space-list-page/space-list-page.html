@@ -1,0 +1,31 @@
+<div class="space-list-page">
+  <header class="page-header">
+    <div class="header-content">
+      <h1>Espacios de Producción</h1>
+      <p>Encuentra el espacio perfecto para tu próximo proyecto</p>
+    </div>
+    <a routerLink="/spaces/create" class="btn-create">
+      + Crear Espacio
+    </a>
+  </header>
+
+  <main class="page-content">
+    @if (isLoading) {
+      <div class="loading">Cargando espacios...</div>
+    } @else if (errorMessage) {
+      <div class="error-message">{{ errorMessage }}</div>
+    } @else if (spaces.length === 0) {
+      <div class="empty-state">
+        <h2>No hay espacios disponibles</h2>
+        <p>¡Sé el primero en crear un espacio de producción!</p>
+        <a routerLink="/spaces/create" class="btn-create-empty">Crear mi primer espacio</a>
+      </div>
+    } @else {
+      <div class="spaces-grid">
+        @for (space of spaces; track space.id) {
+          <app-space-card [space]="space"></app-space-card>
+        }
+      </div>
+    }
+  </main>
+</div>

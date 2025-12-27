@@ -1,0 +1,39 @@
+<div class="equipment-form">
+  <h4>{{ isEditMode ? 'Editar Equipo' : 'Agregar Equipo' }}</h4>
+  <form (ngSubmit)="onSubmit()">
+    <div class="form-row">
+      <div class="form-group name-group">
+        <label for="equipmentName">Nombre del Equipo</label>
+        <input 
+          type="text" 
+          id="equipmentName" 
+          name="equipmentName"
+          [(ngModel)]="formData.name" 
+          placeholder="Ej: Cámara Sony Alpha"
+          required
+        />
+      </div>
+      
+      <div class="form-group quantity-group">
+        <label for="quantity">Cantidad</label>
+        <input 
+          type="number" 
+          id="quantity" 
+          name="quantity"
+          [(ngModel)]="formData.quantity" 
+          min="1"
+          required
+        />
+      </div>
+      
+      <div class="form-actions">
+        @if (isEditMode) {
+          <button type="button" class="btn-cancel" (click)="onCancel()">Cancelar</button>
+        }
+        <button type="submit" class="btn-add" [disabled]="!isFormValid">
+          {{ isEditMode ? 'Guardar' : 'Agregar' }}
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

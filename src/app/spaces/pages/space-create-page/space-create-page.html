@@ -1,0 +1,18 @@
+<div class="space-create-page">
+  <div class="page-container">
+    @if (errorMessage) {
+      <div class="error-alert">{{ errorMessage }}</div>
+    }
+    
+    @if (isLoading) {
+      <div class="loading-overlay">
+        <div class="loading">Creando espacio...</div>
+      </div>
+    }
+    
+    <app-space-form 
+      (submitForm)="onSubmit($event)"
+      (cancelForm)="onCancel()"
+    ></app-space-form>
+  </div>
+</div>

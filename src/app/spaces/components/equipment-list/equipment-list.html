@@ -1,0 +1,39 @@
+<div class="equipment-list-container">
+  <h3>Equipamiento Disponible</h3>
+  
+  @if (canEdit) {
+    <app-equipment-form 
+      (submitForm)="onAddEquipment($event)"
+    ></app-equipment-form>
+  }
+  
+  @if (equipmentList.length === 0) {
+    <p class="no-equipment">No hay equipamiento registrado</p>
+  } @else {
+    <ul class="equipment-list">
+      @for (equipment of equipmentList; track equipment.id) {
+        <li class="equipment-item">
+          @if (editingEquipment?.id === equipment.id) {
+            <app-equipment-form 
+              [equipment]="equipment"
+              [isEditMode]="true"
+              (submitForm)="onUpdateEquipment($event)"
+              (cancelForm)="onCancelEdit()"
+            ></app-equipment-form>
+          } @else {
+            <div class="equipment-info">
+              <span class="equipment-name">{{ equipment.name }}</span>
+              <span class="equipment-quantity">x{{ equipment.quantity }}</span>
+            </div>
+            @if (canEdit) {
+              <div class="equipment-actions">
+                <button class="btn-edit" (click)="onEditClick(equipment)">✏️</button>
+                <button class="btn-delete" (click)="onDeleteClick(equipment)">🗑️</button>
+              </div>
+            }
+          }
+        </li>
+      }
+    </ul>
+  }
+</div>

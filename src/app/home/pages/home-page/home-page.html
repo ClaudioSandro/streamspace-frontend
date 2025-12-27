@@ -1,0 +1,49 @@
+<div class="home-page">
+  <header class="home-header">
+    <h1>StreamSpace</h1>
+    <nav class="main-nav">
+      <a routerLink="/home" class="nav-link active">Inicio</a>
+      <a routerLink="/spaces" class="nav-link">Espacios</a>
+    </nav>
+    <div class="user-info">
+      @if (currentUser) {
+        <span class="username">{{ currentUser.username }}</span>
+        <button class="btn-logout" (click)="signOut()">Cerrar Sesión</button>
+      }
+    </div>
+  </header>
+  
+  <main class="home-content">
+    <section class="hero">
+      <h2>¡Bienvenido a StreamSpace!</h2>
+      <p>Encuentra el espacio de producción perfecto para tu próximo proyecto de streaming, podcast o producción audiovisual.</p>
+      <div class="hero-actions">
+        <a routerLink="/spaces" class="btn-primary">Explorar Espacios</a>
+        <a routerLink="/spaces/create" class="btn-secondary">Crear mi Espacio</a>
+      </div>
+    </section>
+
+    <section class="recent-spaces">
+      <div class="section-header">
+        <h3>Espacios Destacados</h3>
+        <a routerLink="/spaces" class="view-all">Ver todos →</a>
+      </div>
+      
+      @if (isLoading) {
+        <div class="loading">Cargando espacios...</div>
+      } @else if (recentSpaces.length === 0) {
+        <div class="empty-state">
+          <p>No hay espacios disponibles aún.</p>
+          <a routerLink="/spaces/create" class="btn-create">¡Crea el primero!</a>
+        </div>
+      } @else {
+        <div class="spaces-grid">
+          @for (space of recentSpaces; track space.id) {
+            <app-space-card [space]="space"></app-space-card>
+          }
+        </div>
+      }
+    </section>
+  </main>
+</div>
+

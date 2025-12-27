@@ -1,0 +1,140 @@
+<div class="space-form-container">
+  <h2>{{ isEditMode ? 'Editar Espacio' : 'Crear Nuevo Espacio' }}</h2>
+  
+  <form (ngSubmit)="onSubmit()">
+    <div class="form-row">
+      <div class="form-group">
+        <label for="name">Nombre del Espacio *</label>
+        <input 
+          type="text" 
+          id="name" 
+          name="name"
+          [(ngModel)]="formData.name" 
+          placeholder="Ej: Estudio de Grabación Premium"
+          required
+        />
+      </div>
+      
+      <div class="form-group">
+        <label for="type">Tipo de Espacio *</label>
+        <select id="type" name="type" [(ngModel)]="formData.type" required>
+          @for (spaceType of spaceTypes; track spaceType.value) {
+            <option [value]="spaceType.value">{{ spaceType.label }}</option>
+          }
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="description">Descripción *</label>
+      <textarea 
+        id="description" 
+        name="description"
+        [(ngModel)]="formData.description" 
+        placeholder="Describe tu espacio..."
+        rows="3"
+        required
+      ></textarea>
+    </div>
+
+    <div class="form-section">
+      <h3>Ubicación</h3>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="city">Ciudad *</label>
+          <input 
+            type="text" 
+            id="city" 
+            name="city"
+            [(ngModel)]="formData.city" 
+            placeholder="Ej: Lima"
+            required
+          />
+        </div>
+        
+        <div class="form-group">
+          <label for="district">Distrito *</label>
+          <input 
+            type="text" 
+            id="district" 
+            name="district"
+            [(ngModel)]="formData.district" 
+            placeholder="Ej: San Isidro"
+            required
+          />
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label for="addressLine">Dirección *</label>
+        <input 
+          type="text" 
+          id="addressLine" 
+          name="addressLine"
+          [(ngModel)]="formData.addressLine" 
+          placeholder="Ej: Calle Las Flores 456"
+          required
+        />
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h3>Detalles y Precio</h3>
+      <div class="form-row three-cols">
+        <div class="form-group">
+          <label for="hourlyRateAmount">Precio por Hora *</label>
+          <input 
+            type="number" 
+            id="hourlyRateAmount" 
+            name="hourlyRateAmount"
+            [(ngModel)]="formData.hourlyRateAmount" 
+            placeholder="200.00"
+            min="0"
+            step="0.01"
+            required
+          />
+        </div>
+        
+        <div class="form-group">
+          <label for="hourlyRateCurrency">Moneda</label>
+          <select id="hourlyRateCurrency" name="hourlyRateCurrency" [(ngModel)]="formData.hourlyRateCurrency">
+            @for (currency of currencies; track currency) {
+              <option [value]="currency">{{ currency }}</option>
+            }
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="maxPeople">Capacidad Máxima *</label>
+          <input 
+            type="number" 
+            id="maxPeople" 
+            name="maxPeople"
+            [(ngModel)]="formData.maxPeople" 
+            placeholder="15"
+            min="1"
+            required
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="rules">Reglas del Espacio</label>
+      <textarea 
+        id="rules" 
+        name="rules"
+        [(ngModel)]="formData.rules" 
+        placeholder="Ej: Reservar con 24h de anticipación"
+        rows="2"
+      ></textarea>
+    </div>
+
+    <div class="form-actions">
+      <button type="button" class="btn-cancel" (click)="onCancel()">Cancelar</button>
+      <button type="submit" class="btn-submit" [disabled]="!isFormValid">
+        {{ isEditMode ? 'Guardar Cambios' : 'Crear Espacio' }}
+      </button>
+    </div>
+  </form>
+</div>

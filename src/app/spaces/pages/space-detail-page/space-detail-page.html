@@ -1,0 +1,74 @@
+<div class="space-detail-page">
+  @if (isLoading) {
+    <div class="loading">Cargando espacio...</div>
+  } @else if (errorMessage) {
+    <div class="error-message">{{ errorMessage }}</div>
+  } @else if (space) {
+    <header class="detail-header">
+      <div class="header-nav">
+        <a routerLink="/spaces" class="back-link">← Volver a espacios</a>
+        @if (isOwner) {
+          <div class="owner-actions">
+            <a [routerLink]="['/spaces', space.id, 'edit']" class="btn-edit">Editar</a>
+            <button class="btn-delete" (click)="deleteSpace()">Eliminar</button>
+          </div>
+        }
+      </div>
+      
+      <div class="header-content">
+        <span class="space-type">{{ getTypeLabel(space.type) }}</span>
+        <h1>{{ space.name }}</h1>
+        <p class="location">📍 {{ space.addressLine }}, {{ space.district }}, {{ space.city }}</p>
+      </div>
+    </header>
+
+    <main class="detail-content">
+      <div class="main-info">
+        <section class="description-section">
+          <h2>Descripción</h2>
+          <p>{{ space.description }}</p>
+        </section>
+
+        <section class="rules-section">
+          <h2>Reglas del Espacio</h2>
+          <p>{{ space.rules || 'Sin reglas específicas' }}</p>
+        </section>
+
+        <app-equipment-list 
+          [equipmentList]="equipmentList"
+          [canEdit]="isOwner"
+          (addEquipment)="onAddEquipment($event)"
+          (updateEquipment)="onUpdateEquipment($event)"
+          (deleteEquipment)="onDeleteEquipment($event)"
+        ></app-equipment-list>
+      </div>
+
+      <aside class="sidebar">
+        <div class="price-card">
+          <div class="price">
+            <span class="currency">{{ space.hourlyRateCurrency }}</span>
+            <span class="amount">{{ space.hourlyRateAmount }}</span>
+            <span class="period">/ hora</span>
+          </div>
+          
+          <div class="details">
+            <div class="detail-item">
+              <span class="label">Capacidad</span>
+              <span class="value">{{ space.maxPeople }} personas</span>
+            </div>
+            <div class="detail-item">
+              <span class="label">Estado</span>
+              <span class="value status" [class.active]="space.status === 'ACTIVE'">
+                {{ space.status }}
+              </span>
+            </div>
+          </div>
+
+          <button class="btn-reserve" disabled>
+            🔒 Reservar (próximamente)
+          </button>
+        </div>
+      </aside>
+    </main>
+  }
+</div>
