@@ -1,33 +1,44 @@
 <div class="space-card">
-  <div class="card-header">
-    <span class="space-type" [ngClass]="getTypeClass(space.type)">
-      {{ getTypeLabel(space.type) }}
-    </span>
-    <span class="space-status" [ngClass]="space.status === 'ACTIVE' ? 'active' : 'inactive'">
-      {{ space.status }}
-    </span>
+  <div class="card-image">
+    @if (space.imageUrl) {
+      <img [src]="space.imageUrl" [alt]="space.name" />
+    } @else {
+      <div class="no-image">
+        <span>Sin imagen</span>
+      </div>
+    }
   </div>
   
-  <h3 class="space-name">{{ space.name }}</h3>
-  <p class="space-description">{{ space.description }}</p>
-  
-  <div class="space-location">
-    <span class="icon">📍</span>
-    <span>{{ space.district }}, {{ space.city }}</span>
-  </div>
-  
-  <div class="space-details">
-    <div class="detail">
-      <span class="label">Precio/hora</span>
-      <span class="value">{{ space.hourlyRateCurrency }} {{ space.hourlyRateAmount }}</span>
+  <div class="card-content">
+    <div class="card-header">
+      <span class="space-type" [ngClass]="getTypeClass(space.type)">
+        {{ getTypeLabel(space.type) }}
+      </span>
+      <span class="space-status" [ngClass]="space.status === 'ACTIVE' ? 'active' : 'inactive'">
+        {{ space.status }}
+      </span>
     </div>
-    <div class="detail">
-      <span class="label">Capacidad</span>
-      <span class="value">{{ space.maxPeople }} personas</span>
+    
+    <h3 class="space-name">{{ space.name }}</h3>
+    <p class="space-description">{{ space.description }}</p>
+    
+    <div class="space-location">
+      <span>{{ space.district }}, {{ space.city }}</span>
     </div>
-  </div>
-  
-  <div class="card-actions">
-    <a [routerLink]="['/spaces', space.id]" class="btn-view">Ver Detalles</a>
+    
+    <div class="space-details">
+      <div class="detail">
+        <span class="label">Precio/hora</span>
+        <span class="value">{{ space.hourlyRateCurrency }} {{ space.hourlyRateAmount }}</span>
+      </div>
+      <div class="detail">
+        <span class="label">Capacidad</span>
+        <span class="value">{{ space.maxPeople }} personas</span>
+      </div>
+    </div>
+    
+    <div class="card-actions">
+      <a [routerLink]="['/spaces', space.id]" class="btn-view">Ver Detalles</a>
+    </div>
   </div>
 </div>

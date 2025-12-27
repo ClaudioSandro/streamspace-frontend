@@ -1,1 +1,15 @@
-<p>navbar works!</p>
+<header class="navbar">
+  <div class="navbar-brand">
+    <a routerLink="/home" class="logo">StreamSpace</a>
+  </div>
+  <nav class="navbar-nav">
+    <a routerLink="/home" routerLinkActive="active" class="nav-link">Inicio</a>
+    <a routerLink="/spaces" routerLinkActive="active" [routerLinkActiveOptions]="{exact: false}" class="nav-link">Espacios</a>
+  </nav>
+  <div class="navbar-user">
+    @if (currentUser) {
+      <span class="username">{{ currentUser.username }}</span>
+      <button class="btn-logout" (click)="signOut()">Cerrar Sesión</button>
+    }
+  </div>
+</header>

@@ -1,18 +1,4 @@
 <div class="home-page">
-  <header class="home-header">
-    <h1>StreamSpace</h1>
-    <nav class="main-nav">
-      <a routerLink="/home" class="nav-link active">Inicio</a>
-      <a routerLink="/spaces" class="nav-link">Espacios</a>
-    </nav>
-    <div class="user-info">
-      @if (currentUser) {
-        <span class="username">{{ currentUser.username }}</span>
-        <button class="btn-logout" (click)="signOut()">Cerrar Sesión</button>
-      }
-    </div>
-  </header>
-  
   <main class="home-content">
     <section class="hero">
       <h2>¡Bienvenido a StreamSpace!</h2>

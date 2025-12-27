@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { SpacesService } from '../../services/spaces.service';
@@ -16,9 +16,12 @@ import { EquipmentFormData } from '../../components/equipment-form/equipment-for
   styleUrl: './space-detail-page.css',
 })
 export class SpaceDetailPage implements OnInit {
+  @ViewChild('imageInput') imageInput!: ElementRef<HTMLInputElement>;
+  
   space: ProductionSpace | null = null;
   equipmentList: Equipment[] = [];
   isLoading: boolean = true;
+  isUploadingImage: boolean = false;
   errorMessage: string = '';
   isOwner: boolean = false;
 
@@ -134,6 +137,65 @@ export class SpaceDetailPage implements OnInit {
           this.errorMessage = 'Error al eliminar el espacio';
           this.cdr.detectChanges();
           console.error('Error deleting space:', error);
+        }
+      });
+    }
+  }
+
+  // Image management methods
+  triggerImageUpload(): void {
+    this.imageInput.nativeElement.click();
+  }
+
+  onImageSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (!input.files || !input.files[0] || !this.space) return;
+
+    const file = input.files[0];
+    this.isUploadingImage = true;
+
+    const uploadMethod = this.space.imageUrl 
+      ? this.spacesService.updateImage(this.space.id, file)
+      : this.spacesService.uploadImage(this.space.id, file);
+
+    uploadMethod.subscribe({
+      next: (response) => {
+        if (this.space) {
+          this.space = { ...this.space, imageUrl: response.imageUrl };
+        }
+        this.isUploadingImage = false;
+        this.cdr.detectChanges();
+      },
+      error: (error) => {
+        console.error('Error uploading image:', error);
+        this.errorMessage = 'Error al subir la imagen';
+        this.isUploadingImage = false;
+        this.cdr.detectChanges();
+      }
+    });
+
+    // Reset input
+    input.value = '';
+  }
+
+  deleteImage(): void {
+    if (!this.space || !this.space.imageUrl) return;
+
+    if (confirm('¿Estás seguro de eliminar la imagen?')) {
+      this.isUploadingImage = true;
+      this.spacesService.deleteImage(this.space.id).subscribe({
+        next: () => {
+          if (this.space) {
+            this.space = { ...this.space, imageUrl: undefined };
+          }
+          this.isUploadingImage = false;
+          this.cdr.detectChanges();
+        },
+        error: (error) => {
+          console.error('Error deleting image:', error);
+          this.errorMessage = 'Error al eliminar la imagen';
+          this.isUploadingImage = false;
+          this.cdr.detectChanges();
         }
       });
     }

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, timeout, catchError, tap } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { ProductionSpace } from '../models/production-space.model';
+import { ProductionSpace, ImageUploadResponse } from '../models/production-space.model';
 import { CreateSpaceRequest } from '../models/create-space-request.model';
 import { UpdateSpaceRequest } from '../models/update-space-request.model';
 
@@ -42,5 +42,22 @@ export class SpacesService {
 
   delete(spaceId: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${spaceId}`);
+  }
+
+  // Image management methods
+  uploadImage(spaceId: number, file: File): Observable<ImageUploadResponse> {
+    const formData = new FormData();
+    formData.append('file', file);
+    return this.http.post<ImageUploadResponse>(`${this.apiUrl}/${spaceId}/image`, formData);
+  }
+
+  updateImage(spaceId: number, file: File): Observable<ImageUploadResponse> {
+    const formData = new FormData();
+    formData.append('file', file);
+    return this.http.put<ImageUploadResponse>(`${this.apiUrl}/${spaceId}/image`, formData);
+  }
+
+  deleteImage(spaceId: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${spaceId}/image`);
   }
 }

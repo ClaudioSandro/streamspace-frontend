@@ -4,7 +4,16 @@
   } @else if (errorMessage) {
     <div class="error-message">{{ errorMessage }}</div>
   } @else if (space) {
-    <header class="detail-header">
+    <!-- Hidden file input -->
+    <input 
+      type="file" 
+      #imageInput 
+      accept="image/*" 
+      (change)="onImageSelected($event)" 
+      style="display: none"
+    />
+
+    <div class="detail-header">
       <div class="header-nav">
         <a routerLink="/spaces" class="back-link">← Volver a espacios</a>
         @if (isOwner) {
@@ -15,12 +24,48 @@
         }
       </div>
       
+      <!-- Space Image -->
+      <div class="space-image-container">
+        @if (space.imageUrl) {
+          <img [src]="space.imageUrl" [alt]="space.name" class="space-image" />
+        } @else {
+          <div class="no-image">
+            <p>Sin imagen</p>
+          </div>
+        }
+        @if (isOwner) {
+          <div class="image-actions">
+            <button 
+              class="btn-image" 
+              (click)="triggerImageUpload()" 
+              [disabled]="isUploadingImage"
+            >
+              {{ space.imageUrl ? 'Cambiar imagen' : 'Subir imagen' }}
+            </button>
+            @if (space.imageUrl) {
+              <button 
+                class="btn-image-delete" 
+                (click)="deleteImage()" 
+                [disabled]="isUploadingImage"
+              >
+                Eliminar
+              </button>
+            }
+          </div>
+          @if (isUploadingImage) {
+            <div class="upload-overlay">
+              <span>Subiendo...</span>
+            </div>
+          }
+        }
+      </div>
+
       <div class="header-content">
         <span class="space-type">{{ getTypeLabel(space.type) }}</span>
         <h1>{{ space.name }}</h1>
-        <p class="location">📍 {{ space.addressLine }}, {{ space.district }}, {{ space.city }}</p>
+        <p class="location">{{ space.addressLine }}, {{ space.district }}, {{ space.city }}</p>
       </div>
-    </header>
+    </div>
 
     <main class="detail-content">
       <div class="main-info">
@@ -65,7 +110,7 @@
           </div>
 
           <button class="btn-reserve" disabled>
-            🔒 Reservar (próximamente)
+            Reservar (próximamente)
           </button>
         </div>
       </aside>

@@ -14,4 +14,10 @@ export interface ProductionSpace {
   hourlyRateCurrency: string;
   maxPeople: number;
   rules: string;
+  imageUrl?: string;
+}
+
+export interface ImageUploadResponse {
+  imageObjectName: string;
+  imageUrl: string;
 }
